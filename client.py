@@ -14,18 +14,19 @@ def run(opcode):
     Args:
         opcode (int): The operation code representing the action to perform.
     """
+    system('cls')
     with grpc.insecure_channel('localhost:50051') as channel:
         stub = inventory_pb2_grpc.InventoryServiceStub(channel)
         try:
             if opcode == 0: # AddProduct Request
                 pid, pname, pquant, pprice = prompt(['id','name','quantity','price'])
-                print("Processing...")
+                print("Processing Add...")
                 response = stub.AddProduct(inventory_pb2.Product(product_identifier=pid, product_name=pname, product_quantity=pquant, product_price=pprice))
-                title += f"Received: {response.status}"
-                    
+                title = f"Received: {response.status}"
+                   
             elif opcode == 1: # GetProductById Request
                 pid = prompt(['id'])
-                print("Processing...")
+                print("Processing Get Product...")
                 response = stub.GetProductById(inventory_pb2.ProductIdentifier(product_identifier=pid))
                 if response.product_identifier == -1:
                     title = f"Received: Product with ID {pid} does not exist."
@@ -36,7 +37,7 @@ def run(opcode):
             
             elif opcode == 2: # UpdateProductQuantity Request
                 pid, pquant = prompt(['id', 'quantity'])
-                print("Processing...")
+                print("Processing Update Quantity...")
                 response = stub.UpdateProductQuantity(inventory_pb2.Quantity(product_identifier=pid, product_quantity=pquant))
                 if response.product_identifier == -1:
                     title = f"Received: Product with ID {pid} does not exist."
@@ -47,12 +48,12 @@ def run(opcode):
             
             elif opcode == 3: # DeleteProduct Request
                 pid = prompt(['id'])
-                print("Processing...")
+                print("Processing Delete Product...")
                 response = stub.DeleteProduct(inventory_pb2.ProductIdentifier(product_identifier=pid))
                 title = f"Received: {response.status}"
             
             elif opcode == 4: # GetAllProducts Request
-                print("Processing get all...")
+                print("Processing Get All Products...")
                 response_iterator = stub.GetAllProducts(google.protobuf.empty_pb2.Empty())
                 for response in response_iterator:
                     if response.product_identifier == -1:
@@ -72,7 +73,6 @@ def run(opcode):
             elif opcode == 5: # Exit program code
                 system('cls')
                 exit(0)
-              
                 
             # Generating selection menu          
             title += '\n\n What would you like to do '
@@ -92,8 +92,13 @@ def run(opcode):
             run(prompt())
             
         except KeyboardInterrupt:
-            exit(0)
-                
+            inp = input("Make another request? [Y/n]").lower()
+            while inp != 'y':
+                if inp == 'n':
+                    system('cls')
+                    exit(0)
+                inp = input("Make another request? [Y/n]").lower()
+            
 
         
 def prompt(type=0):
@@ -139,7 +144,6 @@ def prompt(type=0):
     except:
         if input("One or more inputs are of incorrect type. Continue? [Y/n]").lower() == 'y':
             prompt()
-            system('cls')
         else:
             system('cls')
             exit(0)

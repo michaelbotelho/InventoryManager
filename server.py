@@ -121,7 +121,8 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
                                             product_quantity=-1, product_price=float(-1))
                 
             # Locate, update quantity, and return product
-            result = r.hset(request.product_identifier, 'product_quantity', request.product_quantity)
+            r.hset(request.product_identifier, 'product_quantity', request.product_quantity)
+            result = r.hgetall(request.product_identifier)
             LOCK.release()
             
             print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product found, quantity updated.')
