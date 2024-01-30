@@ -188,10 +188,12 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             
             # Return empty NULL product if database is empty
             if len(products) <= 0:
+                print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Redis server contains no data at the moment.')
                 return inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
                                                 product_quantity=-1, product_price=float(-1))
            
             # Stream out products in database
+            print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Streaming out all products.')
             for i in range(len(products)):
                 result = r.hgetall(products[i])
                 yield inventory_pb2.Product(product_identifier=int(products[i]), product_name=str(result.get('product_name')), 
