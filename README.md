@@ -4,6 +4,7 @@
 ## Built With
 * [![Redis][rr]][https://redis.com/]
 * [![gRPC][gg]][https://grpc.io/]
+* [![JQuery][JQuery.com]][JQuery-url]
 
 
 # Getting Started
