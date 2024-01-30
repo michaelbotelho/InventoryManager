@@ -4,7 +4,7 @@
 ## Built With
 * ![Redis](https://redis.com/)
 * [![gRPC][gg]][https://grpc.io/]
-* [![JQuery][JQuery.com]][JQuery-url]
+* ![ChatGPT](https://img.shields.io/badge/chatGPT-74aa9c?style=for-the-badge&logo=openai&logoColor=white)
 
 
 # Getting Started
