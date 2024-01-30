@@ -1,4 +1,4 @@
-# Inventory
+# InventoryManager
  Product Inventory Management application using gRPC and Redis.
 
 # Getting Started
