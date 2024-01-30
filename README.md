@@ -2,7 +2,7 @@
  Product Inventory Management application using gRPC and Redis.
 
 ## Built With
-* [![Redis][rr]][https://redis.com/]
+* ![Redis](https://redis.com/)
 * [![gRPC][gg]][https://grpc.io/]
 * [![JQuery][JQuery.com]][JQuery-url]
 
