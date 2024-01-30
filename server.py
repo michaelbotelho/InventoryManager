@@ -78,6 +78,7 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             LOCK.acquire()
             # Return empty NULL product if product_identifier does not exist
             if not r.exists(request.product_identifier):
+                LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product does not exist.')
                 return inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
                                             product_quantity=-1, product_price=float(-1))
@@ -114,6 +115,7 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             LOCK.acquire()
             # Return empty NULL product if product_identifier does not exist
             if not r.exists(request.product_identifier):
+                LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product does not exist.')
                 return inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
                                             product_quantity=-1, product_price=float(-1))
@@ -151,6 +153,7 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             LOCK.acquire()
             # Return Status if product does not exists
             if not r.exists(request.product_identifier):
+                LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product does not exist, NOT deleted.')
                 return inventory_pb2.Status(status="Product does not exist and was NOT deleted.")
             
@@ -188,6 +191,7 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             
             # Return empty NULL product if database is empty
             if len(products) <= 0:
+                LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Redis server contains no data at the moment.')
                 return inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
                                                 product_quantity=-1, product_price=float(-1))
