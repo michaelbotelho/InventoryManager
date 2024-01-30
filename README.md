@@ -1,6 +1,11 @@
 # InventoryManager
  Product Inventory Management application using gRPC and Redis.
 
+## Built With
+* [![Redis][rr]][https://redis.com/]
+* [![gRPC][gg]][https://grpc.io/]
+
+
 # Getting Started
 ## Installation
  1. Install Python 3.7 or newer (https://www.python.org/downloads/)
