@@ -2,8 +2,9 @@
  Product Inventory Management application using gRPC and Redis.
 
 ## Built With
-* ![Redis](https://img.shields.io/badge/redis-%23DD0031.svg?style=for-the-badge&logo=redis&logoColor=white)
-* ![gRPC](https://img.shields.io/badge/gRPC) 
+ * <a href='https://grpc.io/' target="_blank"><img alt='gRPC' src='https://img.shields.io/badge/gRPC-100000?style=for-the-badge&logo=gRPC&logoColor=244C5A&labelColor=244C5A&color=244C5A'/></a>
+ * <a href='https://redis.com' target="_blank"><img alt='redis' src='https://img.shields.io/badge/Redis-100000?style=for-the-badge&logo=redis&logoColor=244C5A&labelColor=DC382C&color=DC382C'/></a>
+
 
 # Getting Started
 ## Installation
