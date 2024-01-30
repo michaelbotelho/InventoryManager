@@ -52,14 +52,14 @@ def run(opcode):
                 title = f"Received: {response.status}"
             
             elif opcode == 4: # GetAllProducts Request
-                print("Processing...")
+                print("Processing get all...")
                 response_iterator = stub.GetAllProducts(google.protobuf.empty_pb2.Empty())
                 for response in response_iterator:
+                    if response.product_identifier == -1:
+                        print("There are currently no products in the database.")
+                        break     
                     print(f"Received:\n\tProduct ID: {response.product_identifier} \n\tProduct Name: {response.product_name}\n\tProduct Quantity: x{response.product_quantity}\n\tProduct Price: ${response.product_price:.2f}")
                 
-                if response.response_iterator.product_identifier == -1:
-                     print(f"Received: Database is currently empty.")
-                     
                 inp = input("Make another request? [Y/n]").lower()
                 while inp != 'y':
                     if inp == 'n':

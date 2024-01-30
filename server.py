@@ -41,7 +41,7 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             r = redis.Redis(host='localhost', port=6379, decode_responses=True)
         
             # Return Status if product exists
-            if r.exists(request.product_identifier):
+            if r.exists(request.product_identifier) > 0:
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product exists, NOT added.')
                 return inventory_pb2.Status(status="Product already exists and was NOT added. \nTry deleting the product first, or change the Product ID.")
             
@@ -77,7 +77,7 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
 
             LOCK.acquire()
             # Return empty NULL product if product_identifier does not exist
-            if not r.exists(request.product_identifier):
+            if r.exists(request.product_identifier) < 1:
                 LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product does not exist.')
                 return inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
@@ -114,7 +114,7 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             
             LOCK.acquire()
             # Return empty NULL product if product_identifier does not exist
-            if not r.exists(request.product_identifier):
+            if r.exists(request.product_identifier) < 1:
                 LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product does not exist.')
                 return inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
@@ -147,12 +147,11 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
         """
         try:
             print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Request: Delete Product ID {request.product_identifier}')
-            print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Request: Add Product\n', fr"{{'product_identifier : '{request.product_identifier}', 'product_name' : '{request.product_name}', 'product_quantity' : '{request.product_quantity}', 'product_price' : '{request.product_price: .2f}'}}")
             r = redis.Redis(host='localhost', port=6379, decode_responses=True)
         
             LOCK.acquire()
             # Return Status if product does not exists
-            if not r.exists(request.product_identifier):
+            if r.exists(request.product_identifier) < 1:
                 LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Product does not exist, NOT deleted.')
                 return inventory_pb2.Status(status="Product does not exist and was NOT deleted.")
@@ -193,8 +192,9 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             if len(products) <= 0:
                 LOCK.release()
                 print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Redis server contains no data at the moment.')
-                return inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
+                yield inventory_pb2.Product(product_identifier=-1, product_name="NULL", 
                                                 product_quantity=-1, product_price=float(-1))
+                return None
            
             # Stream out products in database
             print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Streaming out all products.')
@@ -208,6 +208,8 @@ class InventoryServiceServicer(inventory_pb2_grpc.InventoryServiceServicer):
             print(f'{datetime.now().strftime("%d/%m/%Y %H:%M:%S")} Error connecting to redis-server. Maybe the server wasn\'t started?')
             return inventory_pb2.Product(product_identifier=-2, product_name="NULL", 
                                             product_quantity=-1, product_price=float(-1))
+        except(e):
+            print(f"All other except: {e}")
     
 
 
