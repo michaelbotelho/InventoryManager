@@ -16,6 +16,7 @@
  6. Install requirements ```pip install -r requirements.txt```
 
 ## Usage
+ - Spin up a Redis database ```sudo service redis-server start```
  - Run a server ```python3 server.py```
  - Run a client ```python3 client.py```
  - Follow prompts in terminal
