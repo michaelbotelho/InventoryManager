@@ -1,8 +1,8 @@
 # InventoryManager
  Product Inventory Management application using gRPC to connect the client application to the server application, which stores data on a Redis database.
  
-## Screenshots
-
+## Preview
+https://github.com/michaelbotelho/InventoryManager/assets/55448553/bac93369-bac1-4251-8e10-6a5d842625e6
 
 ## Built With
  * <a href='https://grpc.io/' target="_blank"><img alt='gRPC' src='https://img.shields.io/badge/gRPC-100000?style=for-the-badge&logo=gRPC&logoColor=244C5A&labelColor=244C5A&color=244C5A'/></a>
