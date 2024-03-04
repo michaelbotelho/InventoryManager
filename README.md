@@ -4,7 +4,7 @@
 ## Preview
 https://github.com/michaelbotelho/InventoryManager/assets/55448553/bac93369-bac1-4251-8e10-6a5d842625e6
 
-## Built With
+## Tech Stack
  * <a href='https://grpc.io/' target="_blank"><img alt='gRPC' src='https://img.shields.io/badge/gRPC-100000?style=for-the-badge&logo=gRPC&logoColor=244C5A&labelColor=244C5A&color=244C5A'/></a>
  * <a href='https://redis.com' target="_blank"><img alt='redis' src='https://img.shields.io/badge/Redis-100000?style=for-the-badge&logo=redis&logoColor=244C5A&labelColor=DC382C&color=DC382C'/></a>
 
